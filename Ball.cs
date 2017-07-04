@@ -22,8 +22,8 @@ public class Ball : MonoBehaviour {
         if (col.gameObject.name == "RacketLeft") {
             // Calculate hit factor
             float y = hitFactor_LR ( transform.position,
-                                  col.transform.position,
-                                  col.collider.bounds.size.y);
+                                     col.transform.position,
+                                     col.collider.bounds.size.y);
             // Calculate direction, make length = 1 via .normalized
             Vector2 dir = new Vector2(1, y).normalized;
             // Set velocity with dir * speed
@@ -32,19 +32,43 @@ public class Ball : MonoBehaviour {
         // hit the Right Racket?
         if (col.gameObject.name == "RacketRight") {
             // Calculate hit factor
-            float y = hitFactor_LR (transform.position,
-                                  col.transform.position,
-                                  col.collider.bounds.size.y);
+            float y = hitFactor_LR ( transform.position,
+                                     col.transform.position,
+                                     col.collider.bounds.size.y);
             // Calculate direction, make length = 1 via .normalized
             Vector2 dir = new Vector2(-1, y).normalized;
             // Set velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
         }
         // hit the Top Racket?
+        if (col.gameObject.name == "RacketTop") {
+            // Calculate hit factor
+            float x = hitFactor_TB ( transform.position,
+                                     col.transform.position,
+                                     col.collider.bounds.size.y);
+            // Calculate direction, make length = 1 via .normalized
+            Vector2 dir = new Vector2(x, -1).normalized;
+            // Set velocity with dir * speed
+            GetComponent<Rigidbody2D>().velocity = dir * speed;
+        }
         // hit the Bottom Racket?
+        if (col.gameObject.name == "RacketBottom") {
+            // Calculate hit factor
+            float x = hitFactor_TB ( transform.position,
+                                     col.transform.position,
+                                     col.collider.bounds.size.y);
+            // Calculate direction, make length = 1 via .normalized
+            Vector2 dir = new Vector2(x, 1).normalized;
+            // Set velocity with dir * speed
+            GetComponent<Rigidbody2D>().velocity = dir * speed;
+        }
     }
 
     float hitFactor_LR (Vector2 ballPos, Vector2 racketPos, float racketHeight) {
         return (ballPos.y - racketPos.y) / racketHeight;
+    }
+
+    float hitFactor_TB (Vector2 ballPos, Vector2 racketPos, float racketHeight) {
+        return (ballPos.x - racketPos.x) / racketHeight;
     }
 }
