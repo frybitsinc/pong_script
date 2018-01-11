@@ -35,4 +35,9 @@ public class EscClickListener : MonoBehaviour
             canvas.gameObject.SetActive(false);
         }
     }
+    public void Quit()
+    {
+        //Quit game
+        Application.Quit();
+    }
 }
